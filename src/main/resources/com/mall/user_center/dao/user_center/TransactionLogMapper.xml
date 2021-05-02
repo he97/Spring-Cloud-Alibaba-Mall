@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.user_center.dao.user_center.TransactionLogMapper">
+  <resultMap id="BaseResultMap" type="com.mall.user_center.domain.entity.user_center.TransactionLog">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="log" jdbcType="VARCHAR" property="log" />
+    <result column="transaction_status" jdbcType="VARCHAR" property="transactionStatus" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+</mapper>

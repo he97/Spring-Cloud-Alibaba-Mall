@@ -1,0 +1,20 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yaml
+        extension-configs:
+#          - 明天测试一下，是读取多个文件还是只读取一个文件
+          - data-id: commom1.yaml
+            group: DEFAULT_GROUP
+            reftrsh: true
+  application:
+    #    不要用下划线和特殊字符
+    name: user-center
+  profiles:
+
+#    当找不到user-center-dev.yaml。且也没有usercenter-(profile名字)的dataid，
+#    就会找user-center.yaml(通用配置,还要自己实现这个配置)
+    active: dev
+#    远程配置（nacos）比远程配置优先级高（两个yaml文件）

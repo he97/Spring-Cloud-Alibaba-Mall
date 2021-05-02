@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.user_center.dao.user_center.TransactionListMapper">
+  <resultMap id="BaseResultMap" type="com.mall.user_center.domain.entity.user_center.TransactionList">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="transaction_id" jdbcType="VARCHAR" property="transactionId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="transaction_price" jdbcType="FLOAT" property="transactionPrice" />
+    <result column="transaction_info" jdbcType="VARCHAR" property="transactionInfo" />
+    <result column="transaction_time" jdbcType="TIMESTAMP" property="transactionTime" />
+    <result column="transaction_phone" jdbcType="VARCHAR" property="transactionPhone" />
+    <result column="transaction_address" jdbcType="VARCHAR" property="transactionAddress" />
+    <result column="commodities" jdbcType="LONGVARCHAR" property="commodities" />
+  </resultMap>
+</mapper>

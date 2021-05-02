@@ -1,0 +1,261 @@
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="generator/config.properties"/>
+    <!--user-->
+    <context id="user" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${tableName}">
+            <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+    <!--    user information-->
+    <context id="user_info" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${infoTableName}">
+            <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+    <!--    transaction list-->
+    <context id="transaction_list" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${orderListTableName}">
+            <!--            如果写联合主键就用逗号隔开即可-->
+            <generatedKey column="transaction_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+    <!--    order_log-->
+    <context id="transaction_log" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${orderLogTableName}">
+            <!--            如果写联合主键就用逗号隔开即可-->
+            <generatedKey column="transaction_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+<!--    weixin_info-->
+    <context id="weixin_info" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${weixinInfoTableName}">
+            <!--            如果写联合主键就用逗号隔开即可-->
+            <generatedKey column="weixin_code" sqlStatement="JDBC"/>
+        </table>
+    </context>
+<!--    用户的购物车-->
+    <context id="shopping_cart" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${userCommodityTableName}">
+            <!--            如果写联合主键就用逗号隔开即可-->
+            <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+    <!--    用户的地址-->
+    <context id="user_address" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${userAddressTableName}">
+            <!--            如果写联合主键就用逗号隔开即可-->
+            <generatedKey column="user_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+    <!--    用admin-->
+    <context id="admin" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
+            <property name="mappers" value="tk.mybatis.mapper.common.Mapper"/>
+            <property name="caseSensitive" value="true"/>
+            <property name="lombok" value="Getter,Setter,ToString"/>
+        </plugin>
+
+        <jdbcConnection driverClass="${jdbc.driverClass}"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+        <!--        实体-->
+        <javaModelGenerator targetPackage="com.mall.user_center.domain.entity.${moduleName}"
+                            targetProject="src/main/java"/>
+        <!--        mapper.xml-->
+        <sqlMapGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                         targetProject="src/main/resources"/>
+        <!--        mapper接口-->
+        <javaClientGenerator targetPackage="com.mall.user_center.dao.${moduleName}"
+                             targetProject="src/main/java"
+                             type="XMLMAPPER"/>
+
+        <table tableName="${adminTableName}">
+            <!--            如果写联合主键就用逗号隔开即可-->
+            <generatedKey column="admin_id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>
