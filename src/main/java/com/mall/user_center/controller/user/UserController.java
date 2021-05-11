@@ -214,6 +214,11 @@ public class UserController {
     public RespDto alterUserInfo(@RequestBody AlterUserInfoDto alterUserInfoDto) throws ParseException {
         return this.userService.alterUserInfo(alterUserInfoDto);
     }
+    @CheckLogin
+    @PostMapping("/finishTransaction")
+    public RespDto finishTransaction(@RequestBody FinishTransactionDto finishTransactionDto){
+        return this.userService.finishTransaction(finishTransactionDto);
+    }
 //    @GetMapping("/hadSelled")
 //    public
 }

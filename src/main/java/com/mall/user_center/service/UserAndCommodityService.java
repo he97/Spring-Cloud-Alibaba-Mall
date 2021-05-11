@@ -88,7 +88,7 @@ public class UserAndCommodityService {
      * 获取用户transactionList
      * @return
      */
-    private List<TransactionList> getLists() {
+    public List<TransactionList> getLists() {
         String token = this.getToken();
         String tokenId = this.getTokenId(token);
 

@@ -3,24 +3,18 @@ package com.mall.user_center.service;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.mall.user_center.dao.user_center.ShoppingCartMapper;
-import com.mall.user_center.dao.user_center.UserInformationMapper;
-import com.mall.user_center.dao.user_center.UserMapper;
-import com.mall.user_center.dao.user_center.WeixinInfoMapper;
+import com.mall.user_center.dao.user_center.*;
 import com.mall.user_center.domain.dto.Commodity.CartCommoditiesDTO;
 import com.mall.user_center.domain.dto.Commodity.CommodityInfoRespDto;
 import com.mall.user_center.domain.dto.Commodity.SelectedCommodityDTO;
 import com.mall.user_center.domain.dto.cartDto.AddCartRespDto;
 import com.mall.user_center.domain.dto.cartDto.RemoveCartDto;
 import com.mall.user_center.domain.dto.cartDto.RemoveCartRespDto;
-import com.mall.user_center.domain.dto.user.AlterUserInfoDto;
-import com.mall.user_center.domain.dto.user.RespDto;
-import com.mall.user_center.domain.dto.user.UserInfoRespDto;
-import com.mall.user_center.domain.dto.user.UserLogInDTO;
-import com.mall.user_center.domain.entity.user_center.ShoppingCart;
-import com.mall.user_center.domain.entity.user_center.User;
-import com.mall.user_center.domain.entity.user_center.UserInformation;
-import com.mall.user_center.domain.entity.user_center.WeixinInfo;
+import com.mall.user_center.domain.dto.transaction.BoughtCommodityInfoDto;
+import com.mall.user_center.domain.dto.user.*;
+import com.mall.user_center.domain.entity.user_center.*;
+import com.mall.user_center.domain.enums.CommodityEnum;
+import com.mall.user_center.domain.enums.TransactionCommodityMessageStatusEnum;
 import com.mall.user_center.feignClient.CommodityCenterFeignClient;
 import com.mall.user_center.utils.JwtOperator;
 import io.jsonwebtoken.Claims;
@@ -52,6 +46,8 @@ public class UserService {
     private final ShoppingCartMapper shoppingCartMapper;
     private final JwtOperator jwtOperator;
     private final CommodityCenterFeignClient commodityCenterFeignClient;
+    private final UserAndCommodityService userAndCommodityService;
+    private final TransactionListMapper transactionListMapper;
 
     public User findById(Integer id) {
         return this.userMapper.selectByPrimaryKey(id);
@@ -337,5 +333,36 @@ public class UserService {
         // a为am/pm的标记
         sdf.applyPattern("yyyy-MM-dd");
         return sdf;
+    }
+
+    public RespDto finishTransaction(FinishTransactionDto finishTransactionDto) {
+        String token = this.getToken();
+        String tokenId = this.getTokenId(token);
+        List<TransactionList> lists = this.userAndCommodityService.getLists();
+        lists.stream().filter(
+                dto -> {
+                    if (dto.getTransactionId().equals(finishTransactionDto.getTransactionId())) {
+                        return true;
+                    }
+                    return false;
+                }
+        );
+        TransactionList transactionList = lists.get(0);
+        List<BoughtCommodityInfoDto> boughtCommodityInfoDtos = JSONArray.parseArray(transactionList.getCommodities(), BoughtCommodityInfoDto.class);
+        boughtCommodityInfoDtos.forEach(
+                boughtCommodityInfoDto -> {
+                    if(boughtCommodityInfoDto.getCommodityId().equals(
+                            finishTransactionDto.getCommodityId())){
+                        boughtCommodityInfoDto.setCommodityStatus(
+                                TransactionCommodityMessageStatusEnum.FINISHED.name());
+                    }
+                }
+        );
+        transactionList.setCommodities(JSONArray.toJSONString(boughtCommodityInfoDtos));
+        this.transactionListMapper.updateByPrimaryKey(transactionList);
+        return RespDto.builder()
+                .message("确认收获成功")
+                .status("200")
+                .build();
     }
 }

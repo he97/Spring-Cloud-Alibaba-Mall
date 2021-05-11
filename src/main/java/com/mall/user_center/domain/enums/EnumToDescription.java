@@ -35,6 +35,8 @@ public class EnumToDescription {
                 return "管理员同意取消";
             case "ADMIN_REJECT_CONFIRM":
                 return "管理员拒绝取消";
+            case "FINISHED":
+                return "交易结束";
             default:
                 throw new IllegalStateException("Unexpected value: " + transactionCommodityMessageStatusEnum);
         }

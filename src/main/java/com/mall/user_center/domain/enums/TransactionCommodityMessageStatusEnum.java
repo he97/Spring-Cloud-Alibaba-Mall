@@ -21,7 +21,9 @@ public enum TransactionCommodityMessageStatusEnum {
 //    管理员同意
     ADMIN_AGREE_CONFIRM,
 //    管理员取消
-    ADMIN_REJECT_CONFIRM
+    ADMIN_REJECT_CONFIRM,
+//    订单结束
+    FINISHED
 
 
 }
