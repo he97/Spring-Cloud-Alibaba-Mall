@@ -353,10 +353,13 @@ public class UserService {
             if (boughtCommodityInfoDto.getCommodityId().equals(
                     finishTransactionDto.getCommodityId())) {
                 if (
-                        boughtCommodityInfoDto.getCommodityStatus()
-                                .equals(TransactionCommodityMessageStatusEnum
-                                        .USER_AGREE_CANCEL.name())
+                        boughtCommodityInfoDto.getCommodityStatus().equals(TransactionCommodityMessageStatusEnum.HAD_BOUGHT.name()) ||
+                                boughtCommodityInfoDto.getCommodityStatus().equals(TransactionCommodityMessageStatusEnum.USER_REJECT_CANCEL.name())
                 ) {
+                    UserInformation ownerInfo = this.userInformationMapper.selectByPrimaryKey(finishTransactionDto.getOwnerId());
+                    ownerInfo.setUserBalance(ownerInfo.getUserBalance() +
+                            boughtCommodityInfoDto.getPrice() * boughtCommodityInfoDto.getCount());
+                    this.userInformationMapper.updateByPrimaryKey(ownerInfo);
                     boughtCommodityInfoDto.setCommodityStatus(
                             TransactionCommodityMessageStatusEnum.FINISHED.name());
                 } else {

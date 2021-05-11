@@ -10,4 +10,6 @@ public class FinishTransactionDto {
     private String commodityId;
 
     private String transactionId;
+
+    private String ownerId;
 }
