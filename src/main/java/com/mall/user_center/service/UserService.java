@@ -349,15 +349,25 @@ public class UserService {
         );
         TransactionList transactionList = lists.get(0);
         List<BoughtCommodityInfoDto> boughtCommodityInfoDtos = JSONArray.parseArray(transactionList.getCommodities(), BoughtCommodityInfoDto.class);
-        boughtCommodityInfoDtos.forEach(
-                boughtCommodityInfoDto -> {
-                    if(boughtCommodityInfoDto.getCommodityId().equals(
-                            finishTransactionDto.getCommodityId())){
-                        boughtCommodityInfoDto.setCommodityStatus(
-                                TransactionCommodityMessageStatusEnum.FINISHED.name());
-                    }
+        for (BoughtCommodityInfoDto boughtCommodityInfoDto : boughtCommodityInfoDtos) {
+            if (boughtCommodityInfoDto.getCommodityId().equals(
+                    finishTransactionDto.getCommodityId())) {
+                if (
+                        boughtCommodityInfoDto.getCommodityStatus()
+                                .equals(TransactionCommodityMessageStatusEnum
+                                        .USER_AGREE_CANCEL.name())
+                ) {
+                    boughtCommodityInfoDto.setCommodityStatus(
+                            TransactionCommodityMessageStatusEnum.FINISHED.name());
+                } else {
+                    return RespDto.builder()
+                            .status("500")
+                            .message("暂不能退货")
+                            .build();
                 }
-        );
+            }
+
+        }
         transactionList.setCommodities(JSONArray.toJSONString(boughtCommodityInfoDtos));
         this.transactionListMapper.updateByPrimaryKey(transactionList);
         return RespDto.builder()
