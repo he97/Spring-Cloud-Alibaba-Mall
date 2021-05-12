@@ -8,6 +8,7 @@ import com.mall.user_center.domain.dto.Commodity.CartCommoditiesDTO;
 import com.mall.user_center.domain.dto.Commodity.CommodityInfoRespDto;
 import com.mall.user_center.domain.dto.Commodity.SelectedCommodityDTO;
 import com.mall.user_center.domain.dto.cartDto.AddCartRespDto;
+import com.mall.user_center.domain.dto.cartDto.AlterCartDto;
 import com.mall.user_center.domain.dto.cartDto.RemoveCartDto;
 import com.mall.user_center.domain.dto.cartDto.RemoveCartRespDto;
 import com.mall.user_center.domain.dto.transaction.BoughtCommodityInfoDto;
@@ -375,6 +376,46 @@ public class UserService {
         this.transactionListMapper.updateByPrimaryKey(transactionList);
         return RespDto.builder()
                 .message("确认收获成功")
+                .status("200")
+                .build();
+    }
+
+    /**
+     * 修改购物车中商品， +、—
+     * @param alterCartDto
+     * @return
+     */
+    public RespDto alterUserCart(AlterCartDto alterCartDto) {
+        String token = this.getToken();
+        String tokenId = this.getTokenId(token);
+        ShoppingCart shoppingCart = this.shoppingCartMapper.selectByPrimaryKey(tokenId);
+        List<CartCommoditiesDTO> cartCommoditiesDTOS = JSONArray.parseArray(shoppingCart.getCommodities(), CartCommoditiesDTO.class);
+        for (CartCommoditiesDTO dto : cartCommoditiesDTOS) {
+            if (alterCartDto.getCommodityId().equals(dto.getCommodityId())) {
+                switch (alterCartDto.getType()){
+                    case "ADD":
+                        dto.setCount(dto.getCount() + 1);
+                        break;
+                    case "DEL":
+                        if (dto.getCount() > 1){
+                            dto.setCount(dto.getCount() - 1);
+                        }else {
+                            return RespDto.builder()
+                                    .status("500")
+                                    .message("商品不能再减少了")
+                                    .build();
+                        }
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value: " + alterCartDto.getType());
+                }
+
+            }
+        }
+        shoppingCart.setCommodities(JSONArray.toJSONString(cartCommoditiesDTOS));
+        this.shoppingCartMapper.updateByPrimaryKey(shoppingCart);
+        return RespDto.builder()
+                .message("修改购物车成功。")
                 .status("200")
                 .build();
     }

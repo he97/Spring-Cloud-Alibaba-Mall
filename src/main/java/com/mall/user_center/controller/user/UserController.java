@@ -8,6 +8,7 @@ import com.mall.user_center.dao.user_center.AdminMapper;
 import com.mall.user_center.domain.dto.Commodity.CartCommoditiesDTO;
 import com.mall.user_center.domain.dto.Commodity.SelectedCommodityDTO;
 import com.mall.user_center.domain.dto.cartDto.AddCartRespDto;
+import com.mall.user_center.domain.dto.cartDto.AlterCartDto;
 import com.mall.user_center.domain.dto.cartDto.RemoveCartDto;
 import com.mall.user_center.domain.dto.cartDto.RemoveCartRespDto;
 import com.mall.user_center.domain.dto.order.HandleOrderResp;
@@ -17,7 +18,6 @@ import com.mall.user_center.domain.dto.transaction.StartCancelTranDto;
 import com.mall.user_center.domain.dto.user.*;
 import com.mall.user_center.domain.entity.user_center.Admin;
 import com.mall.user_center.domain.entity.user_center.User;
-import com.mall.user_center.domain.entity.user_center.UserInformation;
 import com.mall.user_center.service.HandleOrderService;
 import com.mall.user_center.service.UserService;
 import com.mall.user_center.utils.JwtOperator;
@@ -199,6 +199,10 @@ public class UserController {
     @GetMapping("/addCart/{commodityId}")
     public AddCartRespDto addCart(@PathVariable String commodityId){
         return this.userService.addCartByCommodityId(commodityId);
+    }
+    @PostMapping("/alterCart")
+    public RespDto alterCart(@RequestBody AlterCartDto alterCartDto){
+        return this.userService.alterUserCart(alterCartDto);
     }
     @PostMapping("/removeCart")
     public RemoveCartRespDto removeCart(@RequestBody RemoveCartDto removeCartDto){
