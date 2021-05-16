@@ -79,6 +79,11 @@ public class AddressService {
                     throw new IllegalStateException("此地址已经存在了");
                 }
             }
+            if(addressDto.getAddressAccurateAddress().isEmpty()
+                || addressDto.getAddressCity().isEmpty() || addressDto.getAddressPhone().isEmpty()
+                || addressDto.getAddressName().isEmpty()){
+                throw new IllegalStateException("信息不全");
+            }
             addressDto.setAddressId(uuid.toString());
             addressDto.setUserId(tokenId);
 //        String toJSONString = JSONObject.toJSONString(addressDto);

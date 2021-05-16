@@ -35,6 +35,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -309,16 +310,37 @@ public class UserService {
      * @return
      */
     public RespDto alterUserInfo(AlterUserInfoDto alterUserInfoDto) throws ParseException {
-        SimpleDateFormat sdf = this.getSimpleDateFormat();
-        Calendar instance = Calendar.getInstance();
-        instance.setTime(alterUserInfoDto.getUserBirthdate());
-        int year = instance.get(Calendar.YEAR);
-        Calendar nowTime = Calendar.getInstance();
-        Date time = this.getTime();
-        nowTime.setTime(time);
-        int nowYear = nowTime.get(Calendar.YEAR);
-        int age = nowYear - year;
-        return null;
+        try {
+            SimpleDateFormat sdf = this.getSimpleDateFormat();
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(alterUserInfoDto.getUserBirthdate());
+            int year = instance.get(Calendar.YEAR);
+            Calendar nowTime = Calendar.getInstance();
+            Date time = this.getTime();
+            nowTime.setTime(time);
+            int nowYear = nowTime.get(Calendar.YEAR);
+            int age = nowYear - year;
+            Date parse = instance.getTime();
+
+            UserInformation build = UserInformation.builder()
+                    .userId(this.getTokenId(this.getToken()))
+                    .userBirthdate(parse)
+                    .userAge(age)
+                    .userSex(alterUserInfoDto.getUserSex())
+                    .userName(alterUserInfoDto.getUserName())
+                    .userPhone(alterUserInfoDto.getUserPhone())
+                    .build();
+            this.userInformationMapper.updateByPrimaryKeySelective(build);
+            return RespDto.builder()
+                    .status("200")
+                    .message("信息更新完成")
+                    .build();
+        } catch (Exception e) {
+            return RespDto.builder()
+                    .status("500")
+                    .message("信息未能更新成功，请重试")
+                    .build();
+        }
 
     }
 
@@ -340,14 +362,11 @@ public class UserService {
         String token = this.getToken();
         String tokenId = this.getTokenId(token);
         List<TransactionList> lists = this.userAndCommodityService.getLists();
-        lists.stream().filter(
+        lists = lists.stream().filter(
                 dto -> {
-                    if (dto.getTransactionId().equals(finishTransactionDto.getTransactionId())) {
-                        return true;
-                    }
-                    return false;
+                    return dto.getTransactionId().equals(finishTransactionDto.getTransactionId());
                 }
-        );
+        ).collect(Collectors.toList());
         TransactionList transactionList = lists.get(0);
         List<BoughtCommodityInfoDto> boughtCommodityInfoDtos = JSONArray.parseArray(transactionList.getCommodities(), BoughtCommodityInfoDto.class);
         for (BoughtCommodityInfoDto boughtCommodityInfoDto : boughtCommodityInfoDtos) {
